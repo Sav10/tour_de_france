@@ -1,0 +1,590 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le tour de France et vous</title>
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style type="text/css">
+
+    .axis {
+      font: 10px sans-serif;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    .axis .domain {
+      fill: none;
+      stroke: #000;
+      stroke-opacity: .3;
+      stroke-width: 10px;
+      stroke-linecap: round;
+    }
+
+    .axis .halo {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 8px;
+      stroke-linecap: round;
+    }
+
+    .slider .handle {
+      fill: #fff;
+      stroke: #000;
+      stroke-opacity: .5;
+      stroke-width: 1.25px;
+      cursor: crosshair;
+    }
+
+    #viz {
+      /*width: 100%;*/
+      /*height: 100%;*/
+    }
+    #tdf_infobox .name_{
+      margin-right: 15px;
+
+    }
+
+    #tdf_infobox .photo_container{
+      height: 260px;
+
+    }
+
+    #tour_detail .photo_container{
+      /*height: 280px;*/
+
+    }
+
+    #tour_detail .photo_{
+      max-height: 200px;
+    }
+
+    #tdf_infobox .callout{
+
+      background-color: #eee;
+    }
+
+    #tdf_infobox .racer_title{
+      font-size: 115%;
+
+      
+    }
+
+    #tdf_infobox .name_{
+      font-weight: bold;
+      font-size: 138%;
+      margin-top: 12%;
+      margin-bottom: 15%;
+
+      
+    }
+
+    a.accordion-title h6{
+      font-weight: bold;
+      color: #1c1c82;
+    }
+
+    h3 {
+      color: #0a0a0a;
+      font-weight: bold;
+    }
+
+    .info_{
+      width: 40px;
+      margin-top: 10%;
+      cursor: pointer;
+
+    }
+
+    .tooltip{
+      color: #000;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+
+
+
+    }
+
+
+
+
+    .tooltip::before{
+      border-color: transparent transparent #ccc !important;
+    }
+
+    .tooltip.left::before{
+      border-color:  transparent transparent transparent #ccc !important;
+    }
+
+    .tooltip.right::before{
+      border-color:   transparent #ccc transparent transparent !important;
+    }
+
+    .tooltip.top:before{
+      border-color: #ccc transparent transparent !important;
+    }
+
+    #tour_detail{
+      font-size: 80%;
+
+    }
+
+    #tour_detail span {
+      font-size: 115%;
+      font-weight: bold;
+
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="small-12 columns">
+      <h3>Quel était le vainqueur du tour de France l'année de votre naissance ?</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="callout">
+        <div class="row">
+          <div class="small-12 large-2 columns">
+            <label>Votre année de naissance</label>
+            <input type="text" id="birth_year_form" placeholder="Année de naissance" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 large-12 columns" id="viz">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="accordion" data-accordion>
+    <div class="row accordion-item" data-accordion-item>
+      <a href="#" class="accordion-title"><h6><span id="map_summary">Carte et résumé du tour </span><span class="year_"></span> :</h6></a>
+      <div class="small-12 large-12 columns accordion-content callout" id='tour_detail' data-tab-content>
+
+        <div class="photo_container">
+          <div class="small-6 large-3 medium-3 columns float-left"><img class="photo_ thumbnail" src=""></div>
+          <div class="small-6 large-3 medium-3 columns float-left">
+            <div>Distance totale : <span id="distance"></span></div>
+            <div>Vitesse moyenne : <span id="speed"></span></div>
+            <div>Nombre d'etapes : <span id="etapes"></span></div>
+            <div>Distance moyenne par étape : <span id="etape_moyenne"></span></div>
+            <div>Equipe gagnante : <span id="winning_team"></span></div>
+
+          </div>
+          <hr  class="show-for-small-only">
+          <div class="small-12 large-3 medium-3 columns float-left" id="info_race">
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+    <div class="row accordion-item is-active" data-accordion-item id="tdf_infobox"">
+      <a href="#" class="accordion-title"><h6>Vainqueurs du Tour de France <span class="year_"></span> :</h6></a>
+      <div  class="accordion-content large-12 columns" data-tab-content>
+        <div class="small-12 large-6 medium-6 columns" id='winner'>
+          <div class="callout">
+
+            <div class="photo_container">
+              <div class="small-6 large-6 medium-6 columns"><img class="photo_ thumbnail" src=""></div>
+              <div class="small-6 large-6 medium-6 columns">
+                <div class="racer_title">Vainqueur du Tour</div>
+                <div class="name_"></div>
+                <img class="flag_" src="">
+                <!--             <div class="info_"><span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="aaaa <br /> bbbb">I</span></div> -->
+                <div class="info_"><img src="resized_images/info2.png"></div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="small-12 large-6 medium-6 columns" id='climber'>
+          <div class="callout">
+
+            <div class="photo_container">
+              <div class="small-6 large-6 medium-6 columns"><img class="photo_ thumbnail" src=""></div>
+              <div class="small-6 large-6 medium-6 columns">
+                <div class="racer_title">Meilleur grimpeur</div>
+                <div class="name_"></div>
+                <img class="flag_" src="">
+                <div class="info_"><img src="resized_images/info2.png"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="small-12 large-6 medium-6 columns" id='sprinter'>
+          <div class="callout">
+
+            <div class="photo_container">
+              <div class="small-6 large-6 medium-6 columns"><img class="photo_ thumbnail" src=""></div>
+              <div class="small-6 large-6 medium-6 columns">
+                <div class="racer_title">Meilleur sprinteur</div>
+                <div class="name_"></div>
+                <img class="flag_" src="">
+                <div class="info_"><img src="resized_images/info2.png"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="small-12 large-6 medium-6 columns" id='young'>
+          <div class="callout">
+
+            <div class="photo_container">
+              <div class="small-6 large-6 medium-6 columns"><img class="photo_ thumbnail" src=""></div>
+              <div class="small-6 large-6 medium-6 columns">
+                <div class="racer_title">Meilleur jeune</div>
+                <div class="name_"></div>
+                <img class="flag_" src="">
+                <div class="info_"><img src="resized_images/info2.png"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
+
+
+
+
+
+      var tip_winner = new Foundation.Tooltip($('#winner .info_'), {template:'<div class="tooltip" id="winner_tip"></div>'} );
+      var tip_climber = new Foundation.Tooltip($('#climber .info_'), {template:'<div class="tooltip" id="climber_tip"></div>'} );
+      var tip_sprinter = new Foundation.Tooltip($('#sprinter .info_'), {template:'<div class="tooltip" id="sprinter_tip"></div>'} );
+      var tip_young = new Foundation.Tooltip($('#young .info_'), {template:'<div class="tooltip" id="young_tip"></div>'} );
+
+
+
+var inner_Width = window.innerWidth;
+if (inner_Width > 800){inner_Width = 800};
+
+if (inner_Width < 500){var tick_number = 8}
+  else{var tick_number = 12}
+
+    var margin = {top: 10, right: 40, bottom: 10, left: 10},
+  width = parseInt(d3.select("#viz").style("width")) - margin.left - margin.right,
+  height = height = 50 - margin.bottom - margin.top;
+
+
+
+  d3.csv("data/tdf_data.csv", function(error, data){
+    d3.json("data/racers_data.json", function(error, data_racers){
+      d3.json("data/years_data.json", function(error, data_years){
+
+
+        data.forEach(function(d){
+          d.year = +d.year;
+          if (d.winner_name == ''){d.winner_name = 'Pas de gagnant cette année'}
+            if (d.climber_name == ''){d.climber_name = 'Pas de gagnant cette année'}
+              if (d.sprinter_name == ''){d.sprinter_name = 'Pas de gagnant cette année'}
+                if (d.young_name == ''){d.young_name = 'Pas de gagnant cette année'}
+
+                  d.winner_flag = d.winner_flag.replace('20px', '80px');
+                d.winner_flag = d.winner_flag.replace('15px', '60px');
+                d.climber_flag = d.climber_flag.replace('20px', '80px');
+                d.sprinter_flag = d.sprinter_flag.replace('20px', '80px');
+                d.young_flag = d.young_flag.replace('20px', '80px');
+
+              })
+
+
+
+        var minmax = d3.extent(data, function(d){return d.year});
+
+        var x = d3.scale.linear()
+        .domain(minmax)
+        .range([0, width])
+        .clamp(true);
+
+        var xaxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom")
+        .tickFormat(function(d) { return d + ""; })
+        .tickSize(0)
+        .tickPadding(12)
+        .ticks(tick_number)
+        ;
+
+
+        var brush = d3.svg.brush()
+        .x(x)
+        .extent([0, 0])
+        .on("brush", brushed);
+
+        var svg = d3.select("#viz").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height / 2 + ")")
+        .call(xaxis)
+        .select(".domain")
+        .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+        .attr("class", "halo")
+        ;
+
+
+
+        var slider = svg.append("g")
+        .attr("class", "slider")
+        .call(brush);
+
+        slider.selectAll(".extent,.resize")
+        .remove();
+
+        slider.select(".background")
+        .attr("height", height);
+
+        var handle = slider.append("circle")
+        .attr("class", "handle")
+        .attr("transform", "translate(0," + height / 2 + ")")
+        .attr("r", 9);
+
+        slider
+        .call(brush.event)
+        .transition()
+        .duration(0)
+        .call(brush.extent([2014, 2014]))
+        .call(brush.event);
+
+        var winner = d3.select("#winner");
+        var climber = d3.select("#climber");
+        var sprinter = d3.select("#sprinter");
+        var young = d3.select("#young");
+        var tour_detail = d3.select("#tour_detail");
+
+
+        function makeviz(value){
+          var datum_ = data.filter(function(d){ return d.year == value});
+
+          if ((value >= minmax[0]) && (value <= minmax[1]) && typeof datum_[0] !== 'undefined' ){
+
+
+            var datum = datum_[0];
+
+
+
+            d3.selectAll('.year_').text(datum.year);
+
+            winner.select(".name_").text(datum.winner_name);
+            winner.select(".flag_").attr('src', datum.winner_flag);
+
+
+
+
+
+
+            if (datum.winner_image != ''){
+              winner.select(".photo_").attr('src', 'resized_images/photos_coureurs/' + datum.winner_image).attr('alt', datum.winner_name)
+              .style('display', 'inline');
+            }
+            else{winner.select(".photo_").style('display', 'none')}
+
+
+              update_tip('winner', datum.winner_url, datum.winner_name);
+
+            climber.select(".name_").text(datum.climber_name);
+            climber.select(".flag_").attr('src', datum.climber_flag);
+            if (datum.climber_image != ''){
+              climber.select(".photo_").attr('src', 'resized_images/photos_coureurs/' + datum.climber_image).attr('alt', datum.climber_name)
+              .style('display', 'inline');
+            }
+            else{climber.select(".photo_").style('display', 'none')}
+              update_tip('climber', datum.climber_url);
+
+
+
+
+
+            sprinter.select(".name_").text(datum.sprinter_name);
+            sprinter.select(".flag_").attr('src', datum.sprinter_flag);
+
+            if (datum.sprinter_image != ''){
+              sprinter.select(".photo_").attr('src', 'resized_images/photos_coureurs/' + datum.sprinter_image)
+              .attr('alt', datum.sprinter_name)
+              .style('display', 'inline');
+            }
+            else{sprinter.select(".photo_").style('display', 'none')}
+              update_tip('sprinter', datum.sprinter_url);
+
+
+            young.select(".name_").text(datum.young_name);
+            young.select(".flag_").attr('src', datum.young_flag);
+            if (datum.young_image != ''){
+              young.select(".photo_").attr('src', 'resized_images/photos_coureurs/' + datum.young_image).attr('alt', datum.young_name)
+              .style('display', 'inline');
+            }
+            else{young.select(".photo_").style('display', 'none')}
+              update_tip('young', datum.young_url);
+
+            if (datum.img_map =="" && datum.winner_flag =="" && datum.winning_team =="" && datum.distance =="" )
+            {
+              tour_detail.select('.photo_container').style('visibility', 'hidden');
+              d3.select("#map_summary").text("Pas de Tour de France en ");
+
+            }
+            else {
+              tour_detail.select('.photo_container').style('visibility', 'visible');
+              d3.select("#map_summary").text("Carte et résumé du tour ");
+
+            }
+
+
+
+            tour_detail.select(".photo_").attr('src', datum.img_map);
+            tour_detail.select(".flag_").attr('src', datum.winner_flag);
+            d3.select('#winning_team').text(datum.winning_team);
+            d3.select('#distance').text(Math.round(datum.distance) + ' km');
+            d3.select('#etapes').text(datum.etapes + ' etapes');
+            d3.select('#etape_moyenne').text(datum.etape_moyenne + 'km');
+            d3.select('#speed').text(datum.speed + ' km/h');
+
+
+
+
+            if (datum.year_url != '')
+            {
+
+
+              d3.select("#info_race").style('display', 'block');
+
+
+
+
+
+              var datum_url = datum.year_url;
+
+              var info_race = d3.select("#info_race")
+              .selectAll('div')
+              .data(d3.entries(data_years[datum_url][0]));
+
+              info_race.exit().remove();
+
+              info_race
+              .enter()
+              .append('div');
+
+              info_race
+              .attr('class', 'inside_class')
+              .html(function(d){ return d.key + " : <span>" + d.value + '</span>'});
+
+            }
+            else{
+              d3.select("#info_race").style('display', 'none');
+
+            }
+
+
+          }
+
+
+        }
+
+        function brushed() {
+          var value = brush.extent()[0];
+
+  if (d3.event.sourceEvent) { // not a programmatic event
+    value = x.invert(d3.mouse(this)[0]);
+    brush.extent([value, value]);
+  }
+
+  handle.attr("cx", x(value));
+  d3.select('#birth_year_form')
+  .attr('value', Math.round(value))
+  .text(Math.round(value));
+
+  d3.select("#birth_year_form").node().value = Math.round(value);
+
+  makeviz(Math.round(value));
+
+
+
+}
+
+;
+
+d3.select("#birth_year_form").on("input", function() {
+  update(+this.value);
+
+});
+
+function update(nValue) {
+
+  // adjust the value
+  handle.attr("cx", x(nValue));
+  makeviz(Math.round(nValue));
+}
+
+
+function update_tip(winner_category, datum_url, name){
+
+
+  if (datum_url != '')
+  {
+    d3.select('#' + winner_category + " .info_").style('display', 'block');
+
+
+    this[winner_category + '_tip'] = d3.select("#" + winner_category + "_tip")
+    .selectAll('div')
+    .data(d3.entries(data_racers[datum_url][0]));
+
+    this[winner_category + '_tip'].exit().remove();
+
+    this[winner_category + '_tip']
+    .enter()
+    .append('div');
+
+    this[winner_category + '_tip']
+    .attr('class', 'inside_class')
+    .text(function(d){ return d.key + " : " + d.value});
+
+
+  }
+  else{
+    d3.select('#' + winner_category + " .info_").style('display', 'none');
+  }
+
+
+}
+
+
+})
+})
+})
+
+
+
+</script>
+</body>
+</html>
